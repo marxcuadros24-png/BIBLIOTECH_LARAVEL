@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+body {
+    background-color: #fdfbf2;
+    color: #3b2a33;
+}
+
+/* Animaciones del Ramillete de Rosas de Libros */
+@keyframes bouquet-breathe {
+    0%, 100% {
+        transform: rotate(0deg) translateY(0);
+    }
+    30% {
+        transform: rotate(1.2deg) translateY(-5px);
+    }
+    70% {
+        transform: rotate(-1.2deg) translateY(3px);
+    }
+}
+
+@keyframes rose-glow {
+    0%, 100% {
+        box-shadow: 0 10px 25px -5px rgba(213, 155, 52, 0.25), 0 8px 10px -6px rgba(107, 28, 82, 0.3);
+    }
+    50% {
+        box-shadow: 0 20px 35px -5px rgba(213, 155, 52, 0.45), 0 12px 16px -4px rgba(107, 28, 82, 0.5);
+    }
+}
+
+.animate-bouquet {
+    animation: bouquet-breathe 6s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+/* Clases del abanico / ramillete floral */
+.bouquet-card {
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom center;
+}
+
+/* Efectos de pétalo de flor / libro */
+.bouquet-petal-1 {
+    transform: rotate(-22deg) translate(-85px, 20px);
+    z-index: 10;
+}
+.group\/bouquet:hover .bouquet-petal-1 {
+    transform: rotate(-32deg) translate(-130px, 35px);
+}
+
+.bouquet-petal-2 {
+    transform: rotate(-11deg) translate(-42px, 5px);
+    z-index: 20;
+}
+.group\/bouquet:hover .bouquet-petal-2 {
+    transform: rotate(-16deg) translate(-65px, -5px);
+}
+
+.bouquet-petal-3 {
+    transform: rotate(0deg) translate(0px, -15px) scale(1.04);
+    z-index: 30;
+    animation: rose-glow 4s ease-in-out infinite;
+}
+.group\/bouquet:hover .bouquet-petal-3 {
+    transform: rotate(0deg) translate(0px, -30px) scale(1.08);
+}
+
+.bouquet-petal-4 {
+    transform: rotate(11deg) translate(42px, 5px);
+    z-index: 20;
+}
+.group\/bouquet:hover .bouquet-petal-4 {
+    transform: rotate(16deg) translate(65px, -5px);
+}
+
+.bouquet-petal-5 {
+    transform: rotate(22deg) translate(85px, 20px);
+    z-index: 10;
+}
+.group\/bouquet:hover .bouquet-petal-5 {
+    transform: rotate(32deg) translate(130px, 35px);
+}
+
+/* Al pasar el cursor sobre cualquier libro individual del ramillete se resalta y florece */
+.bouquet-card:hover {
+    transform: rotate(0deg) translate(0, -45px) scale(1.16) !important;
+    z-index: 50 !important;
+    box-shadow: 0 25px 50px -12px rgba(107, 28, 82, 0.5), 0 0 25px 2px rgba(213, 155, 52, 0.6) !important;
+}
