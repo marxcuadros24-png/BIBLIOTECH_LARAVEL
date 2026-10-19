@@ -11,6 +11,18 @@ body {
     color: #3b2a33;
 }
 
+/* Alta legibilidad y contraste en todas las etiquetas y textos secundarios */
+label {
+    color: #3b2a33;
+    font-weight: 600;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+    color: #8a7382;
+}
+
 /* Animaciones del Ramillete de Rosas de Libros */
 @keyframes bouquet-breathe {
     0%, 100% {

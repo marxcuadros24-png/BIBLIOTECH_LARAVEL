@@ -8,6 +8,25 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js',
     ],
+    safelist: [
+        'grid-cols-1',
+        'grid-cols-2',
+        'grid-cols-3',
+        'grid-cols-4',
+        'grid-cols-5',
+        'sm:grid-cols-2',
+        'sm:grid-cols-3',
+        'md:grid-cols-3',
+        'md:grid-cols-4',
+        'lg:grid-cols-3',
+        'lg:grid-cols-4',
+        'lg:grid-cols-5',
+        'xl:grid-cols-5',
+        'h-36',
+        'h-52',
+        'p-3.5',
+        'p-5',
+    ],
     theme: {
         extend: {
             colors: {
@@ -41,7 +60,9 @@ export default {
                     100: '#fdfbf2', // Original background
                     200: '#f8f1e2',
                     300: '#efe6da', // Original border
-                    400: '#ded2c2',
+                    350: '#ded2c2', // Original beige claro
+                    400: '#685361', // Color oscuro y legible para labels, headers de tablas y subtítulos
+                    500: '#55424f',
                     900: '#3b2a33', // Original text
                 }
             },
