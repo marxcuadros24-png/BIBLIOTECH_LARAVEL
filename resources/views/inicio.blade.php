@@ -30,20 +30,24 @@
                     Bienvenido a <strong>BiblioTech</strong>. Gestiona préstamos, consulta la disponibilidad de ejemplares en tiempo real y explora nuestro catálogo académico y literario.
                 </p>
 
-                <!-- Buscador Central con Botón Comenzar Ahora -->
-                <div class="max-w-xl mx-auto lg:mx-0 bg-white p-2 rounded-2xl shadow-2xl border border-cream-300 flex items-center gap-2">
-                    <form action="{{ route('catalogo') }}" method="GET" class="w-full flex items-center gap-2">
-                        <div class="relative flex-1">
-                            <svg class="w-5 h-5 text-cream-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                            </svg>
-                            <input type="text" name="q" placeholder="Buscar por título, autor, ISBN o editorial..." class="w-full pl-11 pr-4 py-2.5 bg-transparent text-cream-900 placeholder-cream-400 border-none focus:ring-0 text-sm">
-                        </div>
-                        <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-accent-400 to-accent-500 hover:from-accent-300 hover:to-accent-400 text-brand-950 font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all shrink-0 flex items-center gap-2">
+                <!-- Botón de Acción Principal (Comenzar Ahora) -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    @auth
+                        <a href="{{ route('dashboard') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-accent-400 via-accent-500 to-accent-400 hover:from-accent-300 hover:to-accent-400 text-brand-950 font-bold text-sm uppercase tracking-wider shadow-xl hover:shadow-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
+                            <span>Ir a Mi Panel</span>
+                            <svg class="w-5 h-5 text-brand-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-accent-400 via-accent-500 to-accent-400 hover:from-accent-300 hover:to-accent-400 text-brand-950 font-bold text-sm uppercase tracking-wider shadow-xl hover:shadow-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
                             <span>Comenzar Ahora</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </button>
-                    </form>
+                            <svg class="w-5 h-5 text-brand-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
+                    @endauth
+
+                    <a href="{{ route('catalogo') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 backdrop-blur-xs hover:border-white/40 transition-all">
+                        <svg class="w-4 h-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        <span>Explorar Catálogo</span>
+                    </a>
                 </div>
 
                 <!-- Métricas Rápidas -->
