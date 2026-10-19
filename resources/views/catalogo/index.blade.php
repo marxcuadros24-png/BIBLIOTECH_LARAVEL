@@ -15,7 +15,7 @@
             
             <!-- Campo de Búsqueda -->
             <div class="md:col-span-5 relative">
-                <label class="block text-xs font-bold uppercase tracking-wider text-cream-400 mb-1.5">Búsqueda rápida</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-cream-900 mb-1.5">Búsqueda rápida</label>
                 <div class="relative">
                     <svg class="w-5 h-5 text-cream-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     <input type="text" name="q" value="{{ $busqueda ?? '' }}" placeholder="Título, autor, ISBN o editorial..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-cream-300 text-sm focus:border-brand-800 focus:ring-1 focus:ring-brand-800 transition-colors">
@@ -24,7 +24,7 @@
 
             <!-- Filtro por Categoría -->
             <div class="md:col-span-3">
-                <label class="block text-xs font-bold uppercase tracking-wider text-cream-400 mb-1.5">Categoría</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-cream-900 mb-1.5">Categoría</label>
                 <select name="categoria" class="w-full py-2.5 px-3 rounded-xl border border-cream-300 text-sm focus:border-brand-800 focus:ring-1 focus:ring-brand-800 transition-colors">
                     <option value="">Todas las categorías</option>
                     @foreach($categorias as $cat)
@@ -37,7 +37,7 @@
 
             <!-- Filtro por Disponibilidad -->
             <div class="md:col-span-2">
-                <label class="block text-xs font-bold uppercase tracking-wider text-cream-400 mb-1.5">Disponibilidad</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-cream-900 mb-1.5">Disponibilidad</label>
                 <select name="disponibilidad" class="w-full py-2.5 px-3 rounded-xl border border-cream-300 text-sm focus:border-brand-800 focus:ring-1 focus:ring-brand-800 transition-colors">
                     <option value="">Todos</option>
                     <option value="disponible" {{ ($disponibilidad ?? '') == 'disponible' ? 'selected' : '' }}>Con stock</option>
@@ -104,7 +104,8 @@
                 </a>
             </div>
         @else
-            <div :class="gridMode === '3' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10' : 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 mb-10'">
+            <div class="grid mb-10 transition-all duration-300"
+                 :class="gridMode === '5' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'">
                 @foreach($libros as $libro)
                 <div class="bg-white rounded-2xl border border-cream-300 shadow-soft overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     
