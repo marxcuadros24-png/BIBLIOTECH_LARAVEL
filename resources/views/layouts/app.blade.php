@@ -40,7 +40,7 @@
                         </div>
                         <div>
                             <span class="font-heading font-bold text-xl text-white tracking-tight">Biblio<span class="text-accent-400">Tech</span></span>
-                            <span class="hidden sm:inline-block text-xs text-brand-200 ml-2 px-2 py-0.5 rounded bg-brand-900/60 font-medium">Laravel v12</span>
+                            <span class="hidden sm:inline-block text-xs text-brand-200 ml-2 px-2 py-0.5 rounded bg-brand-900/60 font-medium">Gestión Bibliotecaria</span>
                         </div>
                     </a>
                 </div>
@@ -224,7 +224,7 @@
         </main>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer Seguro -->
     <footer class="mt-auto border-t border-cream-300 bg-white py-6 text-center text-xs text-cream-400">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <div>
@@ -233,7 +233,7 @@
             <div class="flex items-center gap-4 text-brand-800 font-semibold">
                 <a href="{{ route('catalogo') }}" class="hover:underline">Catálogo Público</a>
                 <span>&bull;</span>
-                <span class="text-cream-400 font-normal">Base de datos: <strong class="text-brand-900">MySQL db_libros</strong></span>
+                <span class="text-cream-400 font-normal">Ambiente Protegido</span>
             </div>
         </div>
     </footer>

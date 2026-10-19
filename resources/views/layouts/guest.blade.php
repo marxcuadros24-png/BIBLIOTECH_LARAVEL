@@ -99,7 +99,7 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
+    <!-- Footer Seguro -->
     <footer class="border-t border-cream-300 bg-white py-8 text-center text-sm text-cream-400">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -107,12 +107,12 @@
                     <span>Biblio<span class="text-accent-500">Tech</span></span>
                 </div>
                 <div class="text-xs text-cream-400">
-                    Construido con <strong class="text-brand-800">Laravel 12 & Tailwind CSS v3</strong> · Base de datos <strong>MySQL (db_libros)</strong>
+                    &copy; {{ date('Y') }} <strong class="text-brand-800">BiblioTech</strong> · Sistema Integral de Gestión y Catálogo Bibliotecario.
                 </div>
                 <div class="flex items-center gap-4 text-xs font-semibold text-brand-800">
-                    <a href="{{ route('catalogo') }}" class="hover:underline">Libros disponibles</a>
+                    <a href="{{ route('catalogo') }}" class="hover:underline">Explorar Catálogo</a>
                     <span>&bull;</span>
-                    <a href="{{ route('login') }}" class="hover:underline">Portal administrativo</a>
+                    <a href="{{ route('login') }}" class="hover:underline">Acceso al Sistema</a>
                 </div>
             </div>
         </div>
