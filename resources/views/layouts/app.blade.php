@@ -32,7 +32,7 @@
                         </svg>
                     </button>
 
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 group">
+                    <a href="{{ route('inicio') }}" class="flex items-center gap-2 group" title="Ir a la página de inicio">
                         <div class="w-10 h-10 rounded-xl bg-accent-400 text-brand-900 flex items-center justify-center font-bold text-xl shadow-glow group-hover:scale-105 transition-transform">
                             <svg class="w-6 h-6 text-brand-950" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
