@@ -30,7 +30,7 @@
                     Bienvenido a <strong>BiblioTech</strong>. Gestiona préstamos, consulta la disponibilidad de ejemplares en tiempo real y explora nuestro catálogo académico y literario.
                 </p>
 
-                <!-- Buscador Central -->
+                <!-- Buscador Central con Botón Comenzar Ahora -->
                 <div class="max-w-xl mx-auto lg:mx-0 bg-white p-2 rounded-2xl shadow-2xl border border-cream-300 flex items-center gap-2">
                     <form action="{{ route('catalogo') }}" method="GET" class="w-full flex items-center gap-2">
                         <div class="relative flex-1">
@@ -39,9 +39,9 @@
                             </svg>
                             <input type="text" name="q" placeholder="Buscar por título, autor, ISBN o editorial..." class="w-full pl-11 pr-4 py-2.5 bg-transparent text-cream-900 placeholder-cream-400 border-none focus:ring-0 text-sm">
                         </div>
-                        <button type="submit" class="px-5 py-2.5 rounded-xl bg-accent-400 text-brand-950 font-bold text-xs uppercase tracking-wider shadow hover:bg-accent-300 transition-all shrink-0 flex items-center gap-1.5">
-                            <span>Buscar</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-accent-400 to-accent-500 hover:from-accent-300 hover:to-accent-400 text-brand-950 font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] transition-all shrink-0 flex items-center gap-2">
+                            <span>Comenzar Ahora</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </button>
                     </form>
                 </div>
@@ -68,84 +68,122 @@
 
             </div>
 
-            <!-- Columna Derecha: Ramillete de Rosas de Libros Animado -->
-            <div class="lg:col-span-5 flex flex-col items-center justify-center pt-6 lg:pt-0">
+            <!-- Columna Derecha: Vitrina 3D Interactiva de Libros Destacados -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-center pt-6 lg:pt-0" 
+                 x-data="{ 
+                    active: 0,
+                    total: {{ max($librosRamillete->count(), 1) }},
+                    next() { this.active = (this.active + 1) % this.total; },
+                    prev() { this.active = (this.active - 1 + this.total) % this.total; }
+                 }">
                 
-                <div class="relative w-full max-w-[420px] h-[380px] sm:h-[420px] flex items-end justify-center group/bouquet">
+                <div class="relative w-full max-w-[430px] h-[410px] sm:h-[440px] flex items-center justify-center perspective-1000">
                     
-                    <!-- Resplandor floral detrás del ramillete -->
-                    <div class="absolute inset-0 m-auto w-64 h-64 bg-accent-400/20 rounded-full blur-2xl group-hover/bouquet:bg-accent-400/35 transition-all duration-700"></div>
+                    <!-- Resplandor ambiental de fondo -->
+                    <div class="absolute w-72 h-72 bg-gradient-to-tr from-accent-400/30 via-brand-500/25 to-accent-300/20 rounded-full blur-3xl animate-pulse-glow pointer-events-none"></div>
 
-                    <!-- Contenedor del Ramillete con Animación de balanceo -->
-                    <div class="relative w-full h-full flex items-end justify-center animate-bouquet">
-                        
-                        @php
-                            $petals = ['bouquet-petal-1', 'bouquet-petal-2', 'bouquet-petal-3', 'bouquet-petal-4', 'bouquet-petal-5'];
-                        @endphp
-
-                        @foreach($librosRamillete as $index => $libro)
-                        @php
-                            $petalClass = $petals[$index] ?? 'bouquet-petal-3';
-                        @endphp
-                        
-                        <!-- Tarjeta Pétalo del Ramillete -->
-                        <div class="absolute bottom-10 bouquet-card {{ $petalClass }} cursor-pointer">
-                            <a href="{{ route('catalogo', ['q' => $libro->titulo]) }}" class="block w-40 sm:w-44 h-56 sm:h-60 rounded-2xl bg-gradient-to-tr from-brand-950 via-brand-900 to-brand-800 p-2.5 shadow-2xl border-2 border-accent-400/40 relative overflow-hidden group/card text-left">
-                                
-                                <!-- Portada de Libro -->
-                                @if($libro->portada_url)
-                                    <img src="{{ $libro->portada_url }}" alt="{{ $libro->titulo }}" class="absolute inset-0 w-full h-full object-cover opacity-85 group-hover/card:opacity-100 transition-opacity" onerror="this.style.display='none'">
-                                @endif
-
-                                <!-- Gradiente protector sobre la portada -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/40 to-transparent"></div>
-
-                                <!-- Badge superior tipo cinta floral -->
-                                <div class="relative z-10 flex items-center justify-between">
-                                    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-brand-950/90 text-accent-400 border border-accent-400/30">
-                                        {{ Str::limit($libro->categoria->nombre ?? 'Colección', 12) }}
-                                    </span>
-                                    <span class="w-2 h-2 rounded-full {{ $libro->stock_disponible > 0 ? 'bg-emerald-400 ring-2 ring-emerald-400/40' : 'bg-red-400' }}"></span>
-                                </div>
-
-                                <!-- Título y autor abajo -->
-                                <div class="absolute bottom-2.5 left-2.5 right-2.5 z-10">
-                                    <h4 class="text-xs sm:text-sm font-bold text-white line-clamp-2 leading-snug drop-shadow-md">
-                                        {{ $libro->titulo }}
-                                    </h4>
-                                    <p class="text-[10px] text-accent-300 font-medium truncate mt-0.5">
-                                        {{ $libro->autor }}
-                                    </p>
-                                    <div class="flex items-center justify-between text-[9px] text-white/80 mt-1 pt-1 border-t border-white/20">
-                                        <span>{{ $libro->stock_disponible }} disponibles</span>
-                                        <span class="text-accent-400 font-bold group-hover/card:underline">Ver &rarr;</span>
-                                    </div>
-                                </div>
-
-                                <!-- Brillo de relieve 3D como lomo de libro -->
-                                <div class="absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-r from-white/30 to-transparent pointer-events-none"></div>
-                            </a>
-                        </div>
-                        @endforeach
-
-                        <!-- Base o Lazo Dorado que ata el Ramillete -->
-                        <div class="absolute -bottom-2 z-40 flex items-center justify-center pointer-events-none">
-                            <div class="px-4 py-1.5 rounded-full bg-gradient-to-r from-accent-500 via-accent-400 to-accent-500 text-brand-950 font-bold text-[11px] shadow-lg border border-white/40 flex items-center gap-1.5 transform group-hover/bouquet:scale-105 transition-transform">
-                                <svg class="w-3.5 h-3.5 text-brand-950" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                                </svg>
-                                <span>Ramillete de Lecturas</span>
-                            </div>
-                        </div>
-
+                    <!-- Insignia flotante: Disponibilidad en vivo -->
+                    <div class="absolute -top-3 -right-2 z-40 glass-pill px-3 py-1.5 rounded-full text-[11px] font-bold text-accent-300 shadow-xl flex items-center gap-1.5 border border-accent-400/30 animate-float-card">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Catálogo en Tiempo Real</span>
                     </div>
+
+                    <!-- Insignia flotante: Títulos Destacados -->
+                    <div class="absolute -bottom-2 -left-2 z-40 glass-pill px-3 py-1.5 rounded-full text-[11px] font-bold text-white/90 shadow-xl flex items-center gap-1.5 border border-white/20">
+                        <svg class="w-3.5 h-3.5 text-accent-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <span>Top Ejemplares Recomendados</span>
+                    </div>
+
+                    <!-- Tarjetas de Libros en Perspectiva 3D -->
+                    @foreach($librosRamillete as $index => $libro)
+                    <div class="absolute card-3d-showcase cursor-pointer select-none"
+                         :class="{
+                             'z-30 scale-100 opacity-100 translate-x-0 translate-y-0 rotate-0 shadow-2xl': active === {{ $index }},
+                             'z-20 scale-95 opacity-80 translate-x-10 sm:translate-x-12 translate-y-2 rotate-3 shadow-xl': active === ({{ $index }} - 1 + total) % total,
+                             'z-10 scale-90 opacity-50 translate-x-20 sm:translate-x-24 translate-y-5 rotate-6 shadow-md': active === ({{ $index }} - 2 + total) % total,
+                             'z-20 scale-95 opacity-80 -translate-x-10 sm:-translate-x-12 translate-y-2 -rotate-3 shadow-xl': active === ({{ $index }} + 1) % total,
+                             'z-10 scale-90 opacity-50 -translate-x-20 sm:-translate-x-24 translate-y-5 -rotate-6 shadow-md': active === ({{ $index }} + 2) % total,
+                         }"
+                         @click="active = {{ $index }}">
+                        
+                        <div class="w-64 sm:w-72 rounded-3xl bg-gradient-to-b from-brand-900/95 via-brand-950 to-brand-950 p-4 border-2 transition-all duration-300"
+                             :class="active === {{ $index }} ? 'border-accent-400 shadow-[0_0_35px_rgba(213,155,52,0.35)]' : 'border-white/10 hover:border-white/30'">
+                            
+                            <!-- Portada del Libro -->
+                            <div class="relative h-48 sm:h-52 rounded-2xl overflow-hidden bg-brand-900 flex items-center justify-center group/card">
+                                @if($libro->portada_url)
+                                    <img src="{{ $libro->portada_url }}" alt="{{ $libro->titulo }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105" onerror="this.style.display='none'">
+                                @endif
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/30 to-transparent"></div>
+
+                                <!-- Badge de Categoría -->
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-950/80 text-accent-300 border border-accent-400/40 backdrop-blur-xs">
+                                        {{ Str::limit($libro->categoria->nombre ?? 'Colección', 14) }}
+                                    </span>
+                                </div>
+
+                                <!-- Badge de Stock -->
+                                <div class="absolute top-3 right-3 z-10">
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold {{ $libro->stock_disponible > 0 ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white' }} shadow-md backdrop-blur-xs">
+                                        <span class="w-1.5 h-1.5 rounded-full {{ $libro->stock_disponible > 0 ? 'bg-white' : 'bg-red-200' }}"></span>
+                                        {{ $libro->stock_disponible > 0 ? $libro->stock_disponible . ' disp.' : 'Agotado' }}
+                                    </span>
+                                </div>
+
+                                <!-- ISBN en pie de portada -->
+                                @if($libro->isbn)
+                                <div class="absolute bottom-2.5 left-3 z-10 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded backdrop-blur-xs">
+                                    ISBN: {{ $libro->isbn }}
+                                </div>
+                                @endif
+                            </div>
+
+                            <!-- Información del Libro -->
+                            <div class="pt-3.5 space-y-1.5">
+                                <h4 class="text-sm sm:text-base font-bold text-white line-clamp-1 leading-snug group-hover:text-accent-300 transition-colors">
+                                    {{ $libro->titulo }}
+                                </h4>
+                                <p class="text-xs text-accent-400 font-medium truncate flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 shrink-0 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                    <span>{{ $libro->autor }}</span>
+                                </p>
+
+                                <!-- Enlace y editorial -->
+                                <div class="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
+                                    <span class="text-[11px] text-brand-200">{{ $libro->editorial ?? 'Editorial oficial' }}</span>
+                                    <a href="{{ route('catalogo', ['q' => $libro->titulo]) }}" class="inline-flex items-center gap-1 font-bold text-accent-400 hover:text-accent-300 transition-colors">
+                                        <span>Consultar</span>
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @endforeach
+
                 </div>
 
-                <!-- Subtítulo guía del ramillete -->
-                <p class="text-[11px] text-accent-300/80 mt-3 flex items-center gap-1">
-                    <svg class="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
-                    Pasa el cursor para abrir el ramillete y explorar los títulos
-                </p>
+                <!-- Controles interactivos de navegación -->
+                <div class="flex items-center gap-4 mt-5 z-30">
+                    <button type="button" @click="prev()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all hover:scale-105 active:scale-95 border border-white/10 shadow-sm" title="Anterior">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+
+                    <div class="flex items-center gap-1.5">
+                        @foreach($librosRamillete as $index => $libro)
+                        <button type="button" @click="active = {{ $index }}" 
+                                class="h-2 rounded-full transition-all duration-300"
+                                :class="active === {{ $index }} ? 'w-6 bg-accent-400 shadow-glow' : 'w-2 bg-white/30 hover:bg-white/60'">
+                        </button>
+                        @endforeach
+                    </div>
+
+                    <button type="button" @click="next()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all hover:scale-105 active:scale-95 border border-white/10 shadow-sm" title="Siguiente">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
 
             </div>
 
